@@ -1,5 +1,8 @@
 # space-separated
 
+[![Build Status](https://travis-ci.org/mrzmmr/space-separated.svg?branch=master)](https://travis-ci.org/mrzmmr/space-separated)
+[![Coverage Status](https://coveralls.io/repos/github/mrzmmr/space-separated/badge.svg?branch=master)](https://coveralls.io/github/mrzmmr/space-separated?branch=master)
+
 Splits a string by whitespace. 
 ## Install
 
