@@ -9,6 +9,12 @@ test('space-separated', t => {
 	);
 
 	t.same(
+		split('a b'),
+		['a', 'b'],
+		'should split with single chars.'
+	);
+
+	t.same(
 		split('    \n\n\t'),
 		[],
 		'should only return non whitespace values.'
@@ -35,7 +41,7 @@ test('space-separated', t => {
 	t.throws(() => {
 		split(' "bop');
 	},
-	/Unterminated string/,
+	/Unterminated string./,
 	'should throw unterminated string.'
 	);
 

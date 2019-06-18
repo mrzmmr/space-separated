@@ -21,38 +21,44 @@ module.exports = value => {
 			return c;
 		}).join('');
 
-	const isWhitespace = value =>
-		/\s|\t|\n/.test(value);
+	const IS_WHITESPACE = /\s|\n|\t/;
 
 	const whitespace = () =>
-		isWhitespace(peek()) ?
+		IS_WHITESPACE.test(peek()) ?
 			whitespace(next()) :
 			undefined;
 
-	const string = () => {
-		const here = peek();
+	const IS_QUOTE = /"|'|`/;
 
-		if (here !== '"' && here !== '\'' && here !== '`') {
+	const string = () => {
+		if (!IS_QUOTE.test(peek())) {
 			return;
 		}
 
-		let res = next(2);
+		let closed = false;
+		let val = next();
+		const q = val;
 
-		while (peek(-1) !== here) {
-			if (eof()) {
-				throw new Error('Unterminated string.');
+		while (!eof()) {
+			val += peek();
+
+			if (next() === q) {
+				closed = true;
+				break;
 			}
-
-			res += next();
 		}
 
-		return [res];
+		if (!closed) {
+			throw new Error('Unterminated string.');
+		}
+
+		return [val];
 	};
 
 	const nonWhitespace = () => {
 		let res = '';
 
-		while (!isWhitespace(peek()) && !eof()) {
+		while (!IS_WHITESPACE.test(peek()) && !eof()) {
 			const value = string();
 
 			if (value) {
@@ -65,27 +71,21 @@ module.exports = value => {
 		return [res];
 	};
 
-	const sep = (...methods) => v => {
-		value = v;
+	const methods = [whitespace, nonWhitespace];
+	let res = [];
 
-		let res = [];
+	while (!eof()) {
+		let r;
 
-		while (!eof()) {
-			let r;
+		for (const method of methods) {
+			r = method();
 
-			for (const method of methods) {
-				r = method();
-
-				if (r) {
-					res = res.concat(r);
-					break;
-				}
+			if (r) {
+				res = res.concat(r);
+				break;
 			}
 		}
+	}
 
-		return res;
-	};
-
-	return sep(whitespace, nonWhitespace)(value)
-		.filter(c => c.trim().length > 1);
+	return res.filter(c => c.length > 0);
 };
