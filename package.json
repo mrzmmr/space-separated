@@ -9,15 +9,14 @@
 		"node": ">=8"
 	},
 	"devDependencies": {
-		"coveralls": "^3.0.4",
-		"tap": "^14.2.3",
+		"coveralls": "^3.0.5",
+		"jest": "^24.8.0",
 		"xo": "^0.24.0"
 	},
 	"scripts": {
 		"xo": "xo --fix",
-		"pretest": "npm run xo",
-		"test": "tap --100 -Rspec test.js",
-		"report": "nyc report --reporter=text-lcov | coveralls"
+		"test": "jest --coverage test.js",
+		"report": "cat ./coverage/lcov.info | coveralls"
 	},
 	"dependencies": {},
 	"keywords": [

@@ -1,56 +1,40 @@
-const {test} = require('tap');
 const split = require('.');
 
-test('space-separated', t => {
-	t.same(
-		split(''),
-		[],
-		'should return empty array.'
-	);
+describe('space-separated', () => {
+	test('should return empty array.', () => (
+		expect(split('')).toEqual([])
+	));
 
-	t.same(
-		split('a b'),
-		['a', 'b'],
-		'should split with single chars.'
-	);
+	test('should split with single chars.', () => (
+		expect(split('a b')).toEqual(['a', 'b'])
+	));
 
-	t.same(
-		split('    \n\n\t'),
-		[],
-		'should only return non whitespace values.'
-	);
+	test('should only return non whitespace values.', () => (
+		expect(split('    \n\n\t')).toEqual([])
+	));
 
-	t.same(
-		split('  beep\tboop\n'),
-		['beep', 'boop'],
-		'should return value.'
-	);
+	test('should return value.', () => (
+		expect(split('  beep\tboop\n'))
+			.toEqual(['beep', 'boop'])
+	));
 
-	t.same(
-		split('   "beep"\t"boop bop"\n'),
-		['"beep"', '"boop bop"'],
-		'should be string sensitive.'
-	);
+	test('should be string sensitive.', () => (
+		expect(split('   "beep"\t"boop bop"\n'))
+			.toEqual(['"beep"', '"boop bop"'])
+	));
 
-	t.same(
-		split('boop'),
-		['boop'],
-		'should return value.'
-	);
+	test('should return value.', () => (
+		expect(split('boop'))
+			.toEqual(['boop'])
+	));
 
-	t.throws(() => {
-		split(' "bop');
-	},
-	/Unterminated string./,
-	'should throw unterminated string.'
-	);
+	test('should throw unterminated string.', () => (
+		expect(() => split(' "bop'))
+			.toThrow(/Unterminated string./)
+	));
 
-	t.throws(() => {
-		split({});
-	},
-	/Expected string but got object./,
-	'should throw with non string argument.'
-	);
-
-	t.end();
+	test('should throw with non string argument.', () => (
+		expect(() => split({}))
+			.toThrow(/Expected string but got object./)
+	));
 });
