@@ -10,7 +10,7 @@
 	},
 	"devDependencies": {
 		"coveralls": "^3.0.5",
-		"jest": "^24.8.0",
+		"jest": "^24.9.0",
 		"xo": "^0.24.0"
 	},
 	"scripts": {
