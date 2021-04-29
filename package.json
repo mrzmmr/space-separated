@@ -6,19 +6,18 @@
 	"author": "Paul Zimmer",
 	"license": "MIT",
 	"engines": {
-		"node": ">=8"
+		"node": ">=10"
 	},
 	"devDependencies": {
-		"coveralls": "^3.0.5",
-		"jest": "^24.9.0",
-		"xo": "^0.24.0"
+		"coveralls": "^3.1.0",
+		"jest": "^26.6.3",
+		"xo": "^0.39.1"
 	},
 	"scripts": {
 		"xo": "xo --fix",
 		"test": "jest --coverage test.js",
 		"report": "cat ./coverage/lcov.info | coveralls"
 	},
-	"dependencies": {},
 	"keywords": [
 		"space",
 		"sparated",
